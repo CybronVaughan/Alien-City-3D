@@ -12,6 +12,8 @@ public class PlayerController : NetworkBehaviour {
 	protected Vector3 gravidade = Vector3.zero;
 	protected Vector3 move = Vector3.zero;
 	private bool jump = false;
+    public GameObject MainCamera;
+    public GameObject Cam1;
 
 
 	
@@ -24,6 +26,15 @@ public class PlayerController : NetworkBehaviour {
 		cc = GetComponent<CharacterController> ();
 		anim = GetComponent<NetworkAnimator>();
 		anim.SetTrigger("Parado");
+
+        var MinhaCamera = (GameObject)Instantiate(Cam1, MainCamera.transform.localPosition, MainCamera.transform.localRotation);
+        var Eu = gameObject.transform;
+        NetworkServer.Spawn(Cam1);
+        MinhaCamera.transform.parent = Eu;
+        MinhaCamera.transform.localPosition = MainCamera.transform.position;
+        MinhaCamera.transform.localRotation = MainCamera.transform.rotation;
+
+        
 	}
 
 	void Update()
