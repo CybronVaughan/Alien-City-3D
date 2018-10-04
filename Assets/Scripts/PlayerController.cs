@@ -16,8 +16,7 @@ public class PlayerController : NetworkBehaviour {
     public GameObject Cam1;
 
 
-	
-	void Start()
+    void Start()
 	{
         if (!isLocalPlayer)
         {
@@ -28,14 +27,14 @@ public class PlayerController : NetworkBehaviour {
 		anim.SetTrigger("Parado");
 
         var MinhaCamera = (GameObject)Instantiate(Cam1, MainCamera.transform.localPosition, MainCamera.transform.localRotation);
-        var Eu = gameObject.transform;
+        var Eu = this.gameObject.transform;
         NetworkServer.Spawn(Cam1);
         MinhaCamera.transform.parent = Eu;
         MinhaCamera.transform.localPosition = MainCamera.transform.position;
         MinhaCamera.transform.localRotation = MainCamera.transform.rotation;
 
-        
-	}
+
+    }
 
 	void Update()
 	{

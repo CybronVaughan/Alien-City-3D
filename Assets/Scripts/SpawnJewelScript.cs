@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using System;
 
-public class SpawnJewelScript : MonoBehaviour
+public class SpawnJewelScript : NetworkBehaviour
 {
     System.Random r = new System.Random();
     public GameObject[] gameObjects;
@@ -12,11 +13,16 @@ public class SpawnJewelScript : MonoBehaviour
 
     void Start()
     {
+        if (!isServer)
+        {
+            return;
+        }
+
         var gema = r.Next(gameObjects.Length);
-
         pos = gameObjects[gema].GetComponent<Transform>().position;
+        GameObject newJewel = Instantiate(prefab, pos, Quaternion.identity);
+        NetworkServer.Spawn(newJewel);
 
-        Instantiate(prefab, pos, Quaternion.identity);
     }
 
     // Update is called once per frame
